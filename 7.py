@@ -1,10 +1,20 @@
-import urllib2
-from StringIO import StringIO
+import urllib.request
+from io import BytesIO
 from PIL import Image
 
+image_data_arr = urllib.request.urlopen('http://www.pythonchallenge.com/pc/def/oxygen.png').read()
+image_mem_file = BytesIO(image_data_arr)
+image = Image.open(image_mem_file)
 
-image_data_arr = urllib2.urlopen('http://www.pythonchallenge.com/pc/def/oxygen.png').read()
-image_mem_file = StringIO(image_data_arr)
-image_arr = Image.open(image_mem_file).getdata()
+line_to_read = int(image.size[1]/2)
+for i in range( 0,image.size[0],7 ):
+    cur_char = image.getpixel((i,line_to_read))[0]
+    print ( chr(cur_char), end=''  )
 
-print chr(image_arr[int(len( image_arr )/2)][0])
+
+print ()
+
+arr=[105, 110, 116, 101, 103, 114, 105, 116, 121]
+
+for i in range( len(arr) ):
+    print (chr(arr[i]),end='')
